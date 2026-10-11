@@ -1,0 +1,22 @@
+{
+  "name": "scoheart-record-replay",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Local macOS demonstration capture and reusable Skills for Pi and Qoder",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "install:app": "node scripts/install-app.mjs",
+    "install:clients": "node scripts/install.mjs",
+    "test": "node --test test/*.test.mjs",
+    "doctor": "node src/cli.mjs doctor",
+    "mcp": "node src/mcp.mjs"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "1.32.1",
+    "zod": "3.25.76"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}
