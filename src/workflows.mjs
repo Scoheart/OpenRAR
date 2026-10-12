@@ -43,7 +43,7 @@ export async function linkSkill(source, destination) {
   await symlink(source, destination);
 }
 export async function createWorkflow({ sessionId, name, description, instructions, clients = ['pi', 'qoder'], replace = false }, { root = dataRoot, home = process.env.RECORD_REPLAY_CLIENT_HOME || os.homedir() } = {}) {
-  if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(name) || name.length > 64 || name === 'record-workflow') throw new Error('Use a unique lowercase hyphenated Skill name, at most 64 characters');
+  if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(name) || name.length > 64 || name === 'openrar') throw new Error('Use a unique lowercase hyphenated Skill name, at most 64 characters');
   if (!description?.trim() || description.length > 1024 || /[\r\n]/.test(description)) throw new Error('Description must be one nonempty line, at most 1024 characters');
   if (!instructions?.trim() || instructions.length > 100000 || instructions.includes('BEGIN UNTRUSTED OBSERVED INPUT')) throw new Error('Provide concise workflow instructions, not raw recording data');
   if (!clients.length || clients.some(x => !['pi', 'qoder'].includes(x))) throw new Error('Clients must be pi and/or qoder');

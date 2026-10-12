@@ -65,7 +65,7 @@ test('installation preserves unrelated host configuration and is idempotent', as
 });
 test('unmanaged Skill conflicts are rejected before any config changes', async t => {
   const f = await fixture(t);
-  const conflict = path.join(f.home, '.qoder/skills/record-workflow');
+  const conflict = path.join(f.home, '.qoder/skills/openrar');
   await mkdir(conflict, { recursive: true });
   await writeFile(path.join(conflict, 'SKILL.md'), 'unrelated');
   await assert.rejects(installClients(f), /unmanaged Skill/);

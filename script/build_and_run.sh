@@ -14,7 +14,7 @@ npm run build
 npm run install:app
 case "${1:-run}" in
   run|--verify) node src/cli.mjs doctor ;;
-  --debug) lldb -- '/Applications/Record Replay.app/Contents/MacOS/RecordReplay' --endpoint-file "${RECORD_REPLAY_HOME:-$HOME/.local/share/record-replay}/endpoint.json" ;;
+  --debug) lldb -- '/Applications/OpenRAR.app/Contents/MacOS/RecordReplay' --endpoint-file "${RECORD_REPLAY_HOME:-$HOME/.local/share/record-replay}/endpoint.json" ;;
   --logs|--telemetry)
     node src/cli.mjs doctor
     /usr/bin/log stream --info --style compact --predicate 'process == "RecordReplay"'

@@ -1,4 +1,4 @@
-# AGENTS.md — record-replay
+# AGENTS.md — openrar
 
 This project supplies a shared macOS recording service, MCP tools and a portable Skill for Pi and Qoder.
 

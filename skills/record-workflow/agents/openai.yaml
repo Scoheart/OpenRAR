@@ -1,4 +1,0 @@
-interface:
-  display_name: "Record Workflow"
-  short_description: "Record a Mac workflow and reuse it in Pi or Qoder"
-  default_prompt: "Use $record-workflow to record my Mac workflow and create a reusable Skill."
