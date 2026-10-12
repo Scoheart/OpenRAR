@@ -1,16 +1,16 @@
 ---
-name: record-workflow
+name: openrar
 description: Record a demonstrated Mac workflow and create a reusable Skill for Pi and Qoder. Use when the user says watch me, record my workflow, learn this task, 录制操作, 学习我的操作, or asks to turn a completed recording into a reusable workflow.
 ---
 
-# Record a workflow
+# Open Record and Replay
 
-Use the `record-replay` MCP tools. Pi and Qoder may prefix tool names with `mcp__record_replay__`; find the exact available names before calling them.
+Use the `openrar` MCP tools. Pi and Qoder may prefix tool names with `mcp__openrar__`; find the exact available names before calling them.
 
 ## Recording
 
 1. Identify the demonstrated task, success condition and intended application scope. Reuse clear information in the current conversation. Start only when the user is ready to demonstrate.
-2. Call `recording_permissions`. A missing Accessibility or Input Monitoring grant requires the user to enable the exact Record Replay app in macOS System Settings. Do not change macOS privacy settings, bypass TCC, or claim the recorder is ready before it reports ready.
+2. Call `recording_permissions`. A missing Accessibility or Input Monitoring grant requires the user to enable the exact OpenRAR app in macOS System Settings. Do not change macOS privacy settings, bypass TCC, or claim the recorder is ready before it reports ready.
 3. Call `recording_start`, using `appBundleIds` to constrain capture when the task identifies the apps. The native app asks for confirmation and shows Stop/Cancel controls. The limit is 30 minutes; a shorter complete demonstration is preferable.
 4. If a recording is already active, preserve it and explain the status; do not restart it or change its scope. After a successful start, end the turn and tell the user to perform the workflow and then say they are done. Do not poll or run a wait loop.
 5. When the user returns, call `recording_status`. If they are done, call `recording_stop`. If they explicitly cancel, use `recording_cancel` and do not use the discarded recording.

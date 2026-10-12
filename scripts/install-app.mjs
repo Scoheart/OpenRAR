@@ -15,7 +15,7 @@ function identity(bundle) {
   return details.match(/^CDHash=(\w+)$/m)?.[1] || (() => { throw new Error('Missing signed app hash'); })();
 }
 // The caller must stop and quit the recorder before replacing the installed app.
-const processCheck = spawnSync('/usr/bin/pgrep', ['-f', '/Record Replay.app/Contents/MacOS/RecordReplay'], { encoding: 'utf8' });
+const processCheck = spawnSync('/usr/bin/pgrep', ['-f', '/OpenRAR.app/Contents/MacOS/RecordReplay'], { encoding: 'utf8' });
 if (processCheck.status === 0) throw new Error('Quit the idle recorder before installing the app.');
 const sourceHash = identity(builtAppPath);
 const manifest = path.join(dataRoot, 'installed-app.json');
@@ -31,7 +31,7 @@ try {
   if (current === sourceHash) { console.log(`Installed app unchanged: ${appPath}`); process.exit(0); }
 } catch (error) { if (error.code !== 'ENOENT') throw error; }
 await mkdir(dataRoot, { recursive: true, mode: 0o700 });
-const stage = `/Applications/.Record Replay-${process.pid}.app`;
+const stage = `/Applications/.OpenRAR-${process.pid}.app`;
 let backup;
 try {
   run('/usr/bin/ditto', [builtAppPath, stage]);
@@ -39,7 +39,7 @@ try {
   if (existing) {
     const backupDirectory = path.join(dataRoot, 'backups', `app-${Date.now()}`);
     await mkdir(backupDirectory, { recursive: true, mode: 0o700 });
-    backup = path.join(backupDirectory, 'Record Replay.app');
+    backup = path.join(backupDirectory, 'OpenRAR.app');
     await rename(appPath, backup);
   }
   await rename(stage, appPath);

@@ -22,7 +22,7 @@ await writeFile(path.join(appPath, 'Contents/Info.plist'), `<?xml version="1.0" 
 <plist version="1.0"><dict>
 <key>CFBundleIdentifier</key><string>com.scoheart.record-replay</string>
 <key>CFBundleExecutable</key><string>RecordReplay</string>
-<key>CFBundleName</key><string>Record Replay</string>
+<key>CFBundleName</key><string>OpenRAR</string>
 <key>CFBundlePackageType</key><string>APPL</string>
 <key>CFBundleVersion</key><string>1</string>
 <key>LSMinimumSystemVersion</key><string>14.0</string>

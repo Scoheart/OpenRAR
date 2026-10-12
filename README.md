@@ -1,4 +1,4 @@
-# Record Replay
+# OpenRAR — Open Record and Replay
 
 把 Mac 上示范的工作流转成 Pi、Qoder CLI 和 Qoder IDE 都能使用的 Skill。录制器用 Swift 实现，MCP 与安装器用 Node.js 实现；源码和依赖都在本项目内。
 
@@ -9,8 +9,8 @@ Codex 的官方 Record & Replay 原生服务会拒绝未认证的外部客户端
 需要 macOS 14 以上、Node.js 22 以上和包含 Swift 编译器的 Xcode Command Line Tools：
 
 ```sh
-git clone https://github.com/Scoheart/record-replay.git
-cd record-replay
+git clone https://github.com/Scoheart/OpenRAR.git
+cd OpenRAR
 npm ci
 npm run build
 npm run install:app
@@ -23,24 +23,26 @@ npm run doctor
 - Pi：`~/.pi/agent/mcp.json`，录制工具直接暴露，超时 130 秒。
 - Qoder CLI：`~/.qoder/settings.json`。
 - Qoder IDE：`~/.qoder/mcp.json`。
-- Skill：`~/.pi/agent/skills/record-workflow` 和 `~/.qoder/skills/record-workflow` 链接至项目源码。
+- Skill：`~/.pi/agent/skills/openrar` 和 `~/.qoder/skills/openrar` 链接至项目源码。
 - 没有自定义 `~/.local/bin/qodercli` 时，添加指向本项目的启动入口，使用缓存的官方 `@qoder-ai/qodercli@1.1.68`。既有入口会保留。
 
-首次录制需要在系统设置的“隐私与安全性”中，给 `/Applications/Record Replay.app` 授予**辅助功能**和**输入监控**。可以用列表的 `+`，从“应用程序”选择 Record Replay。授权后退出菜单栏中的空闲录制器，再运行 `npm run doctor`。检查结果必须是 `ready: true`。本项目只录制输入和 AX 界面语义，没有录屏，录制阶段不申请屏幕录制权限。执行阶段所用的 Pi/Qoder Computer Use 工具继续使用其原有权限。
+首次录制需要在系统设置的“隐私与安全性”中，给 `/Applications/OpenRAR.app` 授予**辅助功能**和**输入监控**。可以用列表的 `+`，从“应用程序”选择 OpenRAR。授权后退出菜单栏中的空闲录制器，再运行 `npm run doctor`。检查结果必须是 `ready: true`。本项目只录制输入和 AX 界面语义，没有录屏，录制阶段不申请屏幕录制权限。执行阶段所用的 Pi/Qoder Computer Use 工具继续使用其原有权限。
 
 构建产物保留在 `runtime/`；`install:app` 安装到“应用程序”，校验签名并备份本项目旧版本，拒绝覆盖身份不匹配的应用。Pi、Qoder CLI 和 Qoder IDE 共用该安装路径；更新前先停止并退出录制器。
+
+改名前已安装的 `Record Replay.app` 应先退出；更新 Pi MCP 路径和 Skill 链接后安装 `OpenRAR.app`。为保留现有数据与应用身份，数据目录、`RECORD_REPLAY_HOME` / `RECORD_REPLAY_CLIENT_HOME` 和 bundle ID 延续原值。
 
 不要重签或替换已有 Computer Use 应用。这个录制器使用独立 bundle ID `com.scoheart.record-replay`。相同源码重复构建会保留产物；源码更新后重新签名可能需要重新启用系统授权。
 
 ## 使用
 
-Pi 运行 `/reload`，或开新会话；Qoder CLI 运行 `/mcp reload`、`/skills reload`，或开新会话。Qoder IDE 在新会话中加载 Skill，MCP 页面应显示 `record-replay` 和 7 个工具。
+Pi 运行 `/reload`，或开新会话；Qoder CLI 运行 `/mcp reload`、`/skills reload`，或开新会话。Qoder IDE 在新会话中加载 Skill，MCP 页面应显示 `openrar` 和 7 个工具。
 
 对 Agent 说“录制我接下来的操作，做成可复用工作流”，或调用：
 
 ```text
-Pi: /skill:record-workflow
-Qoder CLI / IDE: /record-workflow
+Pi: /skill:openrar
+Qoder CLI / IDE: /openrar
 ```
 
 Agent 检查权限和应用范围，调用开始工具。点击原生确认对话框后示范任务。菜单栏会显示 `● REC`；点 Stop 保留记录，点 Cancel 丢弃记录。最长 30 分钟自动停止。告诉 Agent 已完成，它会读取完整事件流，提炼可变输入、步骤和验证条件，然后安装实际可发现的 Skill。

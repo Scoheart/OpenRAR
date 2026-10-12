@@ -139,7 +139,7 @@ final class Recorder: NSObject, NSApplicationDelegate {
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
         statusItem?.button?.title = "◌ RR"
         let menu = NSMenu()
-        menu.addItem(withTitle: "Record Replay — idle", action: nil, keyEquivalent: "")
+        menu.addItem(withTitle: "OpenRAR — idle", action: nil, keyEquivalent: "")
         menu.addItem(NSMenuItem.separator())
         for (title, action) in [("Stop and keep recording", #selector(stopMenu)), ("Cancel and discard recording", #selector(cancelMenu))] {
             let item = NSMenuItem(title: title, action: action, keyEquivalent: "")
@@ -205,7 +205,7 @@ final class Recorder: NSObject, NSApplicationDelegate {
         let input = CGPreflightListenEventAccess()
         return ["accessibility": ax, "inputMonitoring": input, "ready": ax && input,
                 "appPath": Bundle.main.bundlePath, "bundleIdentifier": Bundle.main.bundleIdentifier ?? "",
-                "instructions": "Enable Record Replay in System Settings → Privacy & Security → Accessibility and Input Monitoring, then quit and restart the idle recorder. Status checks do not request permissions."]
+                "instructions": "Enable OpenRAR in System Settings → Privacy & Security → Accessibility and Input Monitoring, then quit and restart the idle recorder. Status checks do not request permissions."]
     }
     func handle(_ command: [String: Any]) throws -> [String: Any] {
         switch command["method"] as? String {
@@ -227,7 +227,7 @@ final class Recorder: NSObject, NSApplicationDelegate {
     }
     func start(_ args: [String: Any]) throws -> [String: Any] {
         if recording { return metadata }
-        guard permissions()["ready"] as? Bool == true else { throw RecorderError.message("Accessibility and Input Monitoring grants are required for Record Replay. Run recording_permissions for the exact app path.") }
+        guard permissions()["ready"] as? Bool == true else { throw RecorderError.message("Accessibility and Input Monitoring grants are required for OpenRAR. Run recording_permissions for the exact app path.") }
         let duration = args["maxDurationSeconds"] as? Int ?? 1800
         guard duration >= 1 && duration <= 1800 else { throw RecorderError.message("Duration must be 1–1800 seconds") }
         let apps = args["appBundleIds"] as? [String] ?? []
@@ -264,7 +264,7 @@ final class Recorder: NSObject, NSApplicationDelegate {
             metadata = ["sessionId": sessionID, "sessionDirectoryPath": session.path, "eventsPath": events.path,
                         "metadataPath": session.appendingPathComponent("session.json").path, "isRecording": true,
                         "startedAt": timestamp(), "maxDurationSeconds": duration, "eventCount": 0, "appBundleIds": apps,
-                        "producer": "scoheart-record-replay/0.1.0"]
+                        "producer": "scoheart-openrar/0.1.0"]
             recording = true
             saveMetadata()
             worker.start()
@@ -308,7 +308,7 @@ final class Recorder: NSObject, NSApplicationDelegate {
         }
         saveMetadata()
         statusItem?.button?.title = "◌ RR"
-        statusItem?.menu?.item(at: 0)?.title = "Record Replay — idle"
+        statusItem?.menu?.item(at: 0)?.title = "OpenRAR — idle"
         return metadata
     }
     func saveMetadata() {

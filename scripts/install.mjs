@@ -6,8 +6,8 @@ import { project, dataRoot, skillRoots } from '../src/paths.mjs';
 import { linkSkill } from '../src/workflows.mjs';
 
 export async function installClients({ home = os.homedir(), root = dataRoot, node = process.execPath } = {}) {
-  const skill = path.join(project, 'skills/record-workflow');
-  const destinations = Object.values(skillRoots(home)).map(p => path.join(p, 'record-workflow'));
+  const skill = path.join(project, 'skills/openrar');
+  const destinations = Object.values(skillRoots(home)).map(p => path.join(p, 'openrar'));
   const cliSource = path.join(project, 'bin/qodercli');
   const cliDestination = path.join(home, '.local/bin/qodercli');
   let installCli = true;
@@ -28,9 +28,9 @@ export async function installClients({ home = os.homedir(), root = dataRoot, nod
     let existing = '{}\n';
     try { existing = await readFile(file, 'utf8'); } catch (error) { if (error.code !== 'ENOENT') throw error; }
     const config = JSON.parse(existing);
-    const previous = config.mcpServers?.['record-replay'];
-    if (previous && JSON.stringify(previous) !== JSON.stringify(entry) && previous.args?.[0] !== base.args[0]) throw new Error(`Unmanaged record-replay server already configured: ${file}`);
-    const updated = { ...config, mcpServers: { ...config.mcpServers, 'record-replay': { ...entry, ...previous, command: entry.command, args: entry.args } } };
+    const previous = config.mcpServers?.['openrar'];
+    if (previous && JSON.stringify(previous) !== JSON.stringify(entry) && previous.args?.[0] !== base.args[0]) throw new Error(`Unmanaged openrar server already configured: ${file}`);
+    const updated = { ...config, mcpServers: { ...config.mcpServers, 'openrar': { ...entry, ...previous, command: entry.command, args: entry.args } } };
     if (JSON.stringify(updated) !== JSON.stringify(config)) changes.push({ file, contents: JSON.stringify(updated, null, 2) + '\n', existing });
   }
   const backupRoot = path.join(root, 'backups', `install-${new Date().toISOString().replaceAll(':', '-')}`);
@@ -39,7 +39,7 @@ export async function installClients({ home = os.homedir(), root = dataRoot, nod
     const relative = path.relative(home, file).replaceAll('/', '_');
     await writeFile(path.join(backupRoot, relative), existing, { mode: 0o600 });
     await mkdir(path.dirname(file), { recursive: true });
-    const temporary = `${file}.record-replay-${process.pid}`;
+    const temporary = `${file}.openrar-${process.pid}`;
     await writeFile(temporary, contents, { mode: 0o600 });
     await rename(temporary, file);
   }

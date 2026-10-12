@@ -3,7 +3,7 @@ import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js'
 import { z } from 'zod';
 import { nativeCall } from './transport.mjs';
 import { readRecording, createWorkflow } from './workflows.mjs';
-const server = new McpServer({ name: 'scoheart-record-replay', version: '0.1.0' });
+const server = new McpServer({ name: 'scoheart-openrar', version: '0.1.0' });
 const tool = (name, description, schema, run, readOnlyHint = false) => server.tool(name, description, schema, {
   readOnlyHint, destructiveHint: name === 'recording_cancel', openWorldHint: false,
 }, async (args, extra) => {
